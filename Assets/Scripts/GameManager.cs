@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
         Vector3 spawnPos = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 0, spawnPosZ);
         if (!MainManager.Instance.isGameOver)
         {
-        Instantiate(enemyPrefabs[enemyIndex], spawnPos, enemyPrefabs[enemyIndex].transform.rotation);
+            Instantiate(enemyPrefabs[enemyIndex], spawnPos, enemyPrefabs[enemyIndex].transform.rotation);
         }
     }
 
@@ -61,7 +61,8 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
+    
+    // ABSTRACTION
     void Timer()
     {
         minutes = (int)(Time.timeSinceLevelLoad / 60);

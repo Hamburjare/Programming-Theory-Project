@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
         }
     }
-
+    // ABSTRACTION
     void BetweenBounds()
     {
         if (transform.position.x < -xRange)

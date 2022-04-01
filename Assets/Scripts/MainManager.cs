@@ -16,14 +16,17 @@ public class MainManager : MonoBehaviour
     private TextMeshProUGUI BestTimeText;
 
     public static MainManager Instance;
+    // ENCAPSULATION
     public string Name { get; private set; }
 
     public bool isGameOver;
 
+    // ENCAPSULATION
     public string timeFormat { get; } = "{0,2:00}:{1,2:00}:{2,2:00}";
 
     public string BestTimeName;
 
+    // ENCAPSULATION
     private int i_BestSeconds;
     public int BestSeconds
     {
@@ -41,7 +44,7 @@ public class MainManager : MonoBehaviour
             }
         }
     }
-
+    // ENCAPSULATION
     private int i_BestMinutes;
     public int BestMinutes
     {
@@ -59,7 +62,7 @@ public class MainManager : MonoBehaviour
             }
         }
     }
-
+    // ENCAPSULATION
     private int i_BestMiliSeconds;
     public int BestMiliSeconds
     {
