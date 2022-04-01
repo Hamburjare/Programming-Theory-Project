@@ -12,32 +12,76 @@ using UnityEditor;
 public class MainManager : MonoBehaviour
 {
 
-    public TextMeshProUGUI BestTimeText;
+    [SerializeField]
+    private TextMeshProUGUI BestTimeText;
 
     public static MainManager Instance;
     public string Name { get; private set; }
 
+    public bool isGameOver;
+
+    public string timeFormat { get; } = "{0,2:00}:{1,2:00}:{2,2:00}";
+
     public string BestTimeName;
 
-    private int i_BestTime;
-    public int BestTime
+    private int i_BestSeconds;
+    public int BestSeconds
     {
-        get { return i_BestTime; }
+        get { return i_BestSeconds; }
         set
         {
-            if (value < i_BestTime)
+            if (value < i_BestSeconds)
             {
 
                 Debug.LogError("You can't set lower number!");
             }
             else
             {
-                i_BestTime = value;
+                i_BestSeconds = value;
             }
         }
     }
 
-    public TMP_InputField inputField;
+    private int i_BestMinutes;
+    public int BestMinutes
+    {
+        get { return i_BestMinutes; }
+        set
+        {
+            if (value < i_BestMinutes)
+            {
+
+                Debug.LogError("You can't set lower number!");
+            }
+            else
+            {
+                i_BestMinutes = value;
+            }
+        }
+    }
+
+    private int i_BestMiliSeconds;
+    public int BestMiliSeconds
+    {
+        get { return i_BestMiliSeconds; }
+        set
+        {
+            if (value < i_BestMiliSeconds)
+            {
+
+                Debug.LogError("You can't set lower number!");
+            }
+            else
+            {
+                i_BestMiliSeconds = value;
+            }
+        }
+    }
+
+    [SerializeField]
+    private TMP_InputField inputField;
+
+    public int health;
 
     private void Awake()
     {
@@ -48,12 +92,10 @@ public class MainManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        health = 10;
 
         LoadHighScore();
-        if (BestTimeName == null)
-        {
-            BestTimeText.text = $"{BestTimeName} | {i_BestTime}";
-        }
+        BestTimeText.text = $"{BestTimeName} | {string.Format(timeFormat, BestMinutes, BestSeconds, BestMiliSeconds)}";
 
     }
 
@@ -75,15 +117,19 @@ public class MainManager : MonoBehaviour
     [System.Serializable]
     class SaveData
     {
+        public int BestMinutes;
+        public int BestSeconds;
+        public int BestMiliSeconds;
         public string BestTimeName;
-        public int i_BestTime;
     }
 
 
-    public void SaveHighScore(string name, int score)
+    public void SaveHighScore(string name, int minutes, int seconds, int miliSeconds)
     {
         SaveData data = new SaveData();
-        data.i_BestTime = score;
+        data.BestMinutes = minutes;
+        data.BestSeconds = seconds;
+        data.BestMiliSeconds = miliSeconds;
         data.BestTimeName = name;
 
         string json = JsonUtility.ToJson(data);
@@ -99,7 +145,9 @@ public class MainManager : MonoBehaviour
             string json = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(json);
 
-            BestTime = data.i_BestTime;
+            BestMinutes = data.BestMinutes;
+            BestSeconds = data.BestSeconds;
+            BestMiliSeconds = data.BestMiliSeconds;
             BestTimeName = data.BestTimeName;
         }
     }
