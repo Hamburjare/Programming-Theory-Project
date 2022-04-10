@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        BetweenBounds();
         if (Input.GetKeyDown(KeyCode.Space) && !MainManager.Instance.isGameOver)
         {
             // Launch a projectile from the player
